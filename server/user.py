@@ -13,6 +13,11 @@ class User:
             return "Login successful"
         else:
             return "Login failed"
+        
+    def sign_up(self, name, pswd):
+        
+        return
+    
 
 customer = User("jjarrett", "zombie99")
 
