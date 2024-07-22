@@ -17,10 +17,10 @@ function NavBar() {
                 <h3>Homepage</h3>
             </Link>
             <Link to={"/trade"}>
-                  <h3>Trade</h3>
+                  <h3>Portfolio</h3>
             </Link>
             <Link to={"/portfolio"}>
-                  <h3>Portfolio</h3>
+                  <h3>Trade (reverse later)</h3>
             </Link>
             {/* <Link >
                 <h3>Homepage</h3>
