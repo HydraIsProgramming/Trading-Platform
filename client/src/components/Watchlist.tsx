@@ -12,20 +12,26 @@ function Watchlist() {
           <thead>
             <tr>
               <th className="border p-2 bg-gray-500">Name</th>
-              <th className="border p-2 bg-gray-500">Last</th>
+              <th className="border p-2 bg-gray-500">Last Price</th>
               <th className="border p-2 bg-gray-500">Change</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border text-center bg-gray-300 p-2">Yahoo</td>
-              <td className="border text-center bg-gray-300 p-2">2024-07-05</td>
+              { 1 < 0 ? 
+                <td className="border text-center bg-green-400 p-2">Yahoo</td>
+                : <td className="border text-center bg-red-400 p-2">Yahoo</td>
+              }
+              <td className="border text-center bg-gray-300 p-2">$1002</td>
               <td className="border text-center bg-gray-300 p-2">-57%</td>
             </tr>
 
             <tr>
-              <td className="border text-center bg-gray-300 p-2">Yahoo</td>
-              <td className="border text-center bg-gray-300 p-2">2024-07-05</td>
+              {1 > 0 ?
+                <td className="border text-center bg-green-400 p-2">Yahoo</td>
+                : <td className="border text-center bg-red-400 p-2">Yahoo</td>
+              }
+              <td className="border text-center bg-gray-300 p-2">$1002</td>
               <td className="border text-center bg-gray-300 p-2">-57%</td>
             </tr>
 

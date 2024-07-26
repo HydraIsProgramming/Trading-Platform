@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Holdings() {
+  const [settledCash, setSettledCash] = useState(100);
+
   return (
     //   <div className="h-full bg-blue-400 flex-1 w-[1300px] flex  justify-between">
     // <div className = "bg-blue-400 h-[110vh]">
@@ -13,10 +15,10 @@ function Holdings() {
                         <tr>
                             {/* make this look prettier and better done (the "your holding") */}
                               <th className= "text-4xl text-blue-700 text-left">Your Holding</th>
-                        <th className= "border border-black bg-gray-500">Net <br/> Liquidity</th>
-                              <th className="border border-black bg-gray-500">Buying<br/> Power</th>
-                              <th className="border border-black bg-gray-500">Daily<br/> PandL</th>
-                              <th className="border border-black bg-gray-500">Unrealized<br/> PandL</th>
+                              <th className= "border border-black bg-gray-500">Last</th>
+                              <th className="border text-sm border-black bg-gray-500">Change %</th>
+                              <th className="border border-black bg-gray-500">Position<br/> Keyword</th>
+                              <th className="border border-black bg-gray-500">Avg<br/> Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +34,7 @@ function Holdings() {
             </div>
         </div>
         <div className = "relative bottom-[18px]">
-              <h1 className= "border-b-2 border-black text-3xl">Remaining Cash = $52 USD</h1>
+            <h1 className= "border-b-2 border-black text-3xl">Remaining Cash = ${settledCash} CAD</h1>
         </div>
     </div>
   )
