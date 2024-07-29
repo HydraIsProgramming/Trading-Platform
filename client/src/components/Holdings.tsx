@@ -14,11 +14,14 @@ function Holdings() {
                     <thead>
                         <tr>
                             {/* make this look prettier and better done (the "your holding") */}
-                              <th className= "text-4xl text-blue-700 text-left">Your Holding</th>
+                              <th className= "text-4xl text-blue-700 text-left">Your Holding        <span className = "bg-blue-400 ml-[20px] absolute text-sm">Net Liqudity</span></th>
                               <th className= "border border-black bg-gray-500">Last</th>
                               <th className="border text-sm border-black bg-gray-500">Change %</th>
-                              <th className="border border-black bg-gray-500">Position<br/> Keyword</th>
+                              <th className="border border-black bg-gray-500">Position</th>
                               <th className="border border-black bg-gray-500">Avg<br/> Price</th>
+                              <th className="border border-black bg-gray-500">Cost Basis</th>
+                              <th className="border border-black bg-gray-500">Market Value</th>
+                              <th className="border border-black bg-gray-500">Unrealized Profit Loss</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,13 +31,16 @@ function Holdings() {
                               <td className="border border-black bg-gray-300 text-center">-57%</td>
                               <td className="border border-black bg-gray-300 text-center">-57%</td>
                               <td className="border border-black bg-gray-300 text-center">-57%</td>
+                <td className="border border-black bg-gray-300 text-center">-557%</td>
+                <td className="border border-black bg-gray-300 text-center">-227%</td>
+                <td className="border border-black bg-gray-300 text-center">-357%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <div className = "relative bottom-[18px]">
-            <h1 className= "border-b-2 border-black text-3xl">Remaining Cash = ${settledCash} CAD</h1>
+            <h1 className= "border-b-2 border-black text-3xl">Remaining Cash = ${settledCash} USD</h1>
         </div>
     </div>
   )

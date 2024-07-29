@@ -17,7 +17,7 @@ function Portfolio() {
         </div>
         <div className = "space-y-7">
           <p className = "text-2xl  flex">Account #: {accountNumber}</p>
-          <p className="text-2xl flex">Settled Cash: ${settledCash} CAD</p>
+          <p className="text-2xl flex">Settled Cash: ${settledCash} USD</p>
         </div>
       </div>
       

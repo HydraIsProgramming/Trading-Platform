@@ -82,6 +82,9 @@ function Trade() {
                 <th className="px-10 py-2">
                   Order Type
                 </th>
+                  <th className="px-10 py-2">
+                    Time enforced
+                  </th>
               </tr>
 
               <tr>
@@ -104,12 +107,24 @@ function Trade() {
                       value = {orderType}
                       onChange = {handleOrderType}
                       >
-                        <MenuItem value = "Market Order">Market Order</MenuItem>
-                        <MenuItem value="Limit Order">Limit Order</MenuItem>
-                        <MenuItem value="Stop Order">Stop Order</MenuItem>
+                        <MenuItem value = "Market">Market</MenuItem>
+                        <MenuItem value="Limit">Limit</MenuItem>
                       </Select>
                     </FormControl>
                 </td>
+                  <td className='px-10 py-2 w-[250px]'>
+                    <FormControl fullWidth>
+                      <Select
+                        value={orderType} 
+                        // fix this
+                        onChange={handleOrderType}
+                      >
+                        <MenuItem value="Open">Open</MenuItem>
+                        <MenuItem value="Close">Close</MenuItem>
+                        <MenuItem value="Cancel">Good till cancel</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </td>
                 {/* fix later */}
                 <td className='px-5 py-2'>
                   <button type="submit" className="self-end mt-auto bg-blue-500 w-[80px] h-[30px] rounded items-center">Submit</button>
