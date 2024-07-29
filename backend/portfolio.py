@@ -1,6 +1,7 @@
 import yfinance as yf
 import matplotlib.pyplot as plt
 import pandas as pd
+import datetime
 
 class Portfolio():
     def __init__(self):
@@ -21,7 +22,17 @@ class Portfolio():
         # return the cost basis
         return self.costbasis
     
-    def buy_order(self, stock_name: str, quantity: int):
+    def port_beta(self):
+        total_beta = 0
+        for ticker in self.portfolio:
+            stock = yf.Ticker(ticker)
+            beta = stock.info.get('beta', 0)
+            total_beta += beta
+        return total_beta
+
+    def buy_order(self, stock_name: str, quantity: int, date: str):
+        if quantity <= 0:
+            return "Invalid Shares"
         try:
             stock = yf.Ticker(stock_name.upper())
             order_value = stock.info['currentPrice'] * quantity
@@ -35,13 +46,16 @@ class Portfolio():
                 self.portfolio.update({stock_name.upper(): quantity})
                 self.costbasis.update({stock_name.upper(): order_value})
 
+                # CODE FOR ADDING TO DATA BASE
+
         except:
             print("Error: stock name is not valid")
         return f"Purchase of {stock_name} * {quantity} shares\nRemaining balance {self.balance}"
     
-    def sell_order(self, stock_name: str, quantity: int):
+    def sell_order(self, stock_name: str, quantity: int, date: str):
+        if quantity <= 0:
+            return "Invalid Shares"
         # method to sell a users current holding
-
         if self.isin(stock_name) is False: # check if user holds security
             return f"Error: User does not currently own shares of {stock_name.upper()}"
         
@@ -60,6 +74,9 @@ class Portfolio():
 
             self.costbasis.update({stock_name.upper(): self.costbasis.get(stock_name.upper()) - order_value})
             self.balance += order_value
+
+            # CODE FOR ADDING TO DATABASE
+
         except:
             return "Sale failed"
         return f"Sale of {stock_name} * {quantity} shares\nRemaining balance {self.balance}"
@@ -70,7 +87,7 @@ class Portfolio():
             result = True
         return result
     
-    def port_performance(self, start_date: str, end_date: str):
+    def port_graph(self, start_date: str, end_date: str):
         # Fetch historical data for each stock in the portfolio
         historical_data = {}
         for stock_name, quantity in self.portfolio.items():
@@ -93,16 +110,19 @@ class Portfolio():
         plt.show()
         return 
 
-    def display_portfolio():
-        
-        return
+    #def cash_graph(self, start_date: str, end_date: str):
+        # NEED DATABASE TO GET HISTORICAL CASH BALANCES
+    #    return
+
 
     
 port = Portfolio()
-print(port.buy_order("acb", 3))
-print(port.buy_order("acb", 3))
+date = datetime.datetime.today
+print(port.buy_order("acb", 3, date))
+print(port.buy_order("acb", 3, date))
 print(port.get_cost_basis())
-print(port.sell_order("acb", 2))
+print(port.sell_order("acb", 2, date))
 print(port.get_cost_basis())
-print(port.port_performance('2023-01-01', '2024-01-01'))
+print(port.port_graph('2023-01-01', '2024-01-01'))
 print(port.get_portfolio())
+print(port.port_beta())
