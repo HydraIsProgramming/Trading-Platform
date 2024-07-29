@@ -1,5 +1,6 @@
 import yfinance as yf
 import matplotlib.pyplot as plt
+from datetime import datetime
 import pandas as pd
 
 class Stock_research:
@@ -24,15 +25,18 @@ class Stock_research:
         plt.show()
         return
     
-    def get_cashflow(stock_name: str):
-        stock = yf.Ticker(stock_name)
-        return stock.cashflow 
+    #def get_cashflow(stock_name: str):
+    #    """get cashflow for stock"""
+    #    stock = yf.Ticker(stock_name)
+    #    return stock.cashflow 
     
     def get_info(stock_name: str):
+        """get a summary of stock information"""
         stock = yf.Ticker(stock_name)
         return stock.info
     
     def get_news(stock_name: str):
+        """get news about the stock"""
         stock = yf.Ticker(stock_name)
         return stock.news
     
@@ -56,13 +60,18 @@ class Stock_research:
         stock = yf.Ticker(stock_name)
         return stock.info['dayLow']
     
-    def get_daylow(stock_name: str):
+    def get_dayhigh(stock_name: str):
         stock = yf.Ticker(stock_name)
         return stock.info['dayHigh']
     
     def get_mrkt_cap(stock_name: str):
         stock = yf.Ticker(stock_name)
         return stock.info['marketCap']
+    
+    def get_change_px(stock_name: str):
+        stock = yf.Ticker(stock_name)
+        stock = yf.info['open'] - yf.info['currentPrice']
+        return 
     
     def get_beta(stock_name: str):
         stock = yf.Ticker(stock_name)
@@ -74,7 +83,7 @@ class Stock_research:
     
 
 stock_name = 'AAPL'
-# Stock_research.stock_graph(stock_name, '2021-01-01', '2022-01-01')
+Stock_research.stock_graph(stock_name, '2021-01-01', '2022-01-01')
 
 # print(Stock_research.get_cashflow(stock_name))
 # print(Stock_research.get_news(stock))
