@@ -1,7 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from "axios";
 
 function Holdings() {
   const [settledCash, setSettledCash] = useState(100);
+  const [userStockSymbols, getUserStockSymbols] = useState(["AAPL"]);
+
+  const getData = async () => {
+    const link = "http://127.0.0.1:5000/"
+    try {
+      const requests = userStockSymbols.map(
+        name => {
+          axios.get(`${link}/research/price?stock_name=${name}`)
+        }
+      )
+    } catch {
+      console.log("")
+    }
+  }
+
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://127.0.0.1:5000/research/price?stock_name=AAPL`,
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
   return (
     //   <div className="h-full bg-blue-400 flex-1 w-[1300px] flex  justify-between">
