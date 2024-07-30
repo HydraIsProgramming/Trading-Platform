@@ -1,6 +1,6 @@
 import yfinance as yf
 from datetime import datetime
-from backend.portfolio import *
+from portfolio import *
 
 class User:
     def __init__(self, name, pswd):
