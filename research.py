@@ -71,7 +71,7 @@ class Stock_research:
     def get_change_px(stock_name: str):
         stock = yf.Ticker(stock_name)
         stock = yf.info['open'] - yf.info['currentPrice']
-        return 
+        return stock.info['']
     
     def get_beta(stock_name: str):
         stock = yf.Ticker(stock_name)

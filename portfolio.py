@@ -21,6 +21,10 @@ class Portfolio():
         # return the cost basis
         return self.costbasis
     
+    def get_position(self):
+        # return the position of the stock in user portfolio
+        return
+    
     def port_beta(self):
         total_beta = 0
         for ticker in self.portfolio:
