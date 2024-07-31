@@ -21,6 +21,14 @@ class Portfolio():
         # return the cost basis
         return self.costbasis
     
+    def get_stock_cost_basis(self, stock_name):
+        # return the position of stock in portfolio
+        return self.costbasis.get(stock_name, 0) 
+    
+    def get_stock_position(self, stock_name):
+        # return the position of stock in portfolio
+        return self.portfolio.get(stock_name, 0)
+    
     def port_beta(self):
         total_beta = 0
         for ticker in self.portfolio:
@@ -108,3 +116,4 @@ class Portfolio():
         plt.ylabel('Portfolio Value ($)')
         plt.show()
         return 
+

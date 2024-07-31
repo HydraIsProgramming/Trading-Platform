@@ -109,6 +109,54 @@ def get_portfolio_graph():
     user_portfolio.port_graph(start_date, end_date)
     return jsonify({'message': 'Graph generated successfully'})
 
+@app.route('/portfolio/holding', methods=['GET'])
+def get_portfolio_holding():
+    stock_name = request.args.get('stock_name')
+    if not stock_name:
+        return jsonify({'error': 'stock_name is required'}), 400
+    curr_price = research.Stock_research.get_curr_price(stock_name)
+    change_percentage = research.Stock_research.get_change_px_percentage(stock_name)
+    position = user_portfolio.get_stock_position(stock_name)
+    ### get avg price using database
+    cost_basis = user_portfolio.get_stock_cost_basis(stock_name)
+    market_value = curr_price * position
+    profit_loss = market_value - cost_basis
+    return jsonify({
+        'current_price': curr_price,
+        'change_percentage': change_percentage,
+        'position': position,
+        'cost_basis': cost_basis,
+        'market_value': market_value,
+        'profit_loss': profit_loss
+    })
+
+@app.route('/research/stock_info', methods=['GET'])
+def get_stock_information():
+    stock_name = request.args.get('stock_name')
+    if not stock_name:
+        return jsonify({'error': 'stock_name is required'}), 400
+
+    try:
+        # Fetching stock information
+        curr_price = research.Stock_research.get_curr_price(stock_name)
+        change_percentage = research.Stock_research.get_change_px_percentage(stock_name)
+        summary = research.Stock_research.get_summary(stock_name)
+        market_cap = research.Stock_research.get_mrkt_cap(stock_name)
+        sector = research.Stock_research.get_sector(stock_name)
+
+        # Generate the daily chart and get it as a base64 string
+        # daily_chart = research.Stock_research.stock_graph(stock_name, period="1d", interval="60m")
+        return jsonify({
+            'current_price': curr_price,
+            'change_percentage': change_percentage,
+            'summary': summary,
+            'market_cap': market_cap,
+            'sector': sector
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    
+
 if __name__ == '__main__':
     app.run(debug=True)
-
