@@ -1,7 +1,7 @@
 import yfinance as yf
+import matplotlib
+matplotlib.use('Agg')  # Set the backend to Agg
 import matplotlib.pyplot as plt
-from datetime import datetime
-import pandas as pd
 import io
 import base64
 
@@ -12,7 +12,7 @@ class Stock_research:
         # Fetch historical data and plot the graph
         stock = yf.Ticker(stock_name)
         hist = stock.history(period=period, interval=interval)
-        
+
         plt.figure(figsize=(10, 5))
         plt.plot(hist.index, hist['Close'], label='Close Price')
         plt.title(f'{stock_name} Stock Price')
@@ -74,6 +74,10 @@ class Stock_research:
     def get_mrkt_cap(stock_name: str):
         stock = yf.Ticker(stock_name)
         return stock.info['marketCap']
+    
+    def get_stock_name(stock_name: str):
+        stock = yf.Ticker(stock_name)
+        return stock.info['longName']
     
     def get_change_px_percentage(stock_name: str):
         stock = yf.Ticker(stock_name)

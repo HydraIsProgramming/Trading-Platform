@@ -1,6 +1,10 @@
 import yfinance as yf
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
+import io
+import base64
 
 class Portfolio():
     def __init__(self):
@@ -107,13 +111,22 @@ class Portfolio():
         
         # Calculate the portfolio value over time
         portfolio_value = df.mul(pd.Series(self.portfolio), axis=1).sum(axis=1)
-        
+
         # Plot the portfolio performance
         plt.figure(figsize=(10, 5))
         portfolio_value.plot()
         plt.title('Portfolio Performance Over Time')
         plt.xlabel('Date')
         plt.ylabel('Portfolio Value ($)')
-        plt.show()
-        return 
+
+        # Save the figure to a BytesIO buffer
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        plt.close()
+        buf.seek(0)
+
+        # Encode the image in base64
+        image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+
+        return f"data:image/png;base64,{image_base64}"
 

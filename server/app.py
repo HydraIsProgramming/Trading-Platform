@@ -143,20 +143,29 @@ def get_stock_information():
         summary = research.Stock_research.get_summary(stock_name)
         market_cap = research.Stock_research.get_mrkt_cap(stock_name)
         sector = research.Stock_research.get_sector(stock_name)
+        name = research.Stock_research.get_stock_name(stock_name)
 
-        # Generate the daily chart and get it as a base64 string
-        # daily_chart = research.Stock_research.stock_graph(stock_name, period="1d", interval="60m")
         return jsonify({
             'current_price': curr_price,
             'change_percentage': change_percentage,
             'summary': summary,
             'market_cap': market_cap,
-            'sector': sector
+            'sector': sector,
+            'stock_name': name
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-    
+@app.route('/research/stock_chart', methods=['GET'])
+def stock_chart():
+    stock_name = request.args.get('stock_name')
+    if not stock_name:
+        return jsonify({'error': 'stock_name is required'}), 400
+
+    # Generate the daily chart and get it as a base64 string
+    daily_chart = research.Stock_research.stock_graph(stock_name, period="1d", interval="60m")
+
+    return {'daily_chart': daily_chart}
 
 if __name__ == '__main__':
     app.run(debug=True)
