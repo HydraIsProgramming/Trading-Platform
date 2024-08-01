@@ -14,7 +14,7 @@ class Stock_research:
         hist = stock.history(period=period, interval=interval)
 
         plt.figure(figsize=(10, 5))
-        plt.plot(hist.index, hist['Close'], label='Close Price')
+        plt.plot(hist.index, hist['Close'], label='Price')
         plt.title(f'{stock_name} Stock Price')
         plt.xlabel('Date')
         plt.ylabel('Price ($)')

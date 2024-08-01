@@ -6,16 +6,16 @@ import portfolio
 app = Flask(__name__)
 CORS(app)
 
-# Initialize portfolio
+# Initialize portfolio and research classes
 user_portfolio = portfolio.Portfolio()
+stock_research = research.Stock_research()
 
-# Research Endpoints
 @app.route('/research/summary', methods=['GET'])
 def get_summary():
     stock_name = request.args.get('stock_name')
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
-    summary = research.Stock_research.get_summary(stock_name)
+    summary = stock_research.get_summary(stock_name)
     return jsonify({'summary': summary})
 
 @app.route('/research/info', methods=['GET'])
@@ -23,7 +23,7 @@ def get_info():
     stock_name = request.args.get('stock_name')
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
-    info = research.Stock_research.get_info(stock_name)
+    info = stock_research.get_info(stock_name)
     return jsonify(info)
 
 @app.route('/research/news', methods=['GET'])
@@ -31,7 +31,7 @@ def get_news():
     stock_name = request.args.get('stock_name')
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
-    news = research.Stock_research.get_news(stock_name)
+    news = stock_research.get_news(stock_name)
     return jsonify(news)
 
 @app.route('/research/sector', methods=['GET'])
@@ -39,7 +39,7 @@ def get_sector():
     stock_name = request.args.get('stock_name')
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
-    sector = research.Stock_research.get_sector(stock_name)
+    sector = stock_research.get_sector(stock_name)
     return jsonify({'sector': sector})
 
 @app.route('/research/price', methods=['GET'])
@@ -47,7 +47,7 @@ def get_price():
     stock_name = request.args.get('stock_name')
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
-    price = research.Stock_research.get_curr_price(stock_name)
+    price = stock_research.get_curr_price(stock_name)
     return jsonify({'current_price': price})
 
 @app.route('/research/graph', methods=['GET'])
@@ -57,7 +57,7 @@ def get_graph():
     end_date = request.args.get('end_date')
     if not stock_name or not start_date or not end_date:
         return jsonify({'error': 'stock_name, start_date, and end_date are required'}), 400
-    research.Stock_research.stock_graph(stock_name, start_date, end_date)
+    stock_research.stock_graph(stock_name, start_date, end_date)
     return jsonify({'message': 'Graph generated successfully'})
 
 # Portfolio Endpoints
@@ -114,10 +114,9 @@ def get_portfolio_holding():
     stock_name = request.args.get('stock_name')
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
-    curr_price = research.Stock_research.get_curr_price(stock_name)
-    change_percentage = research.Stock_research.get_change_px_percentage(stock_name)
+    curr_price = stock_research.get_curr_price(stock_name)
+    change_percentage = stock_research.get_change_px_percentage(stock_name)
     position = user_portfolio.get_stock_position(stock_name)
-    ### get avg price using database
     cost_basis = user_portfolio.get_stock_cost_basis(stock_name)
     market_value = curr_price * position
     profit_loss = market_value - cost_basis
@@ -137,13 +136,12 @@ def get_stock_information():
         return jsonify({'error': 'stock_name is required'}), 400
 
     try:
-        # Fetching stock information
-        curr_price = research.Stock_research.get_curr_price(stock_name)
-        change_percentage = research.Stock_research.get_change_px_percentage(stock_name)
-        summary = research.Stock_research.get_summary(stock_name)
-        market_cap = research.Stock_research.get_mrkt_cap(stock_name)
-        sector = research.Stock_research.get_sector(stock_name)
-        name = research.Stock_research.get_stock_name(stock_name)
+        curr_price = stock_research.get_curr_price(stock_name)
+        change_percentage = stock_research.get_change_px_percentage(stock_name)
+        summary = stock_research.get_summary(stock_name)
+        market_cap = stock_research.get_mrkt_cap(stock_name)
+        sector = stock_research.get_sector(stock_name)
+        name = stock_research.get_stock_name(stock_name)
 
         return jsonify({
             'current_price': curr_price,
@@ -162,8 +160,7 @@ def stock_chart():
     if not stock_name:
         return jsonify({'error': 'stock_name is required'}), 400
 
-    # Generate the daily chart and get it as a base64 string
-    daily_chart = research.Stock_research.stock_graph(stock_name, period="1d", interval="60m")
+    daily_chart = stock_research.stock_graph(stock_name, period="1d", interval="60m")
 
     return {'daily_chart': daily_chart}
 
