@@ -5,13 +5,20 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import io
 import base64
+import pymysql
 
 class Portfolio():
-    def __init__(self):
-        # initializing the portfolio class
-        self.portfolio = {}
-        self.balance = 10000
-        self.costbasis = {}
+    def init(self):
+        # initialization as before
+        self.connection = self.create_db_connection()
+
+    def create_db_connection(self):
+        return pymysql.connect(host='your_host',
+                               user='your_user',
+                               password='your_password',
+                               db='your_db',
+                               charset='utf8mb4',
+                               cursorclass=pymysql.cursors.DictCursor)
     
     def get_portfolio(self):
         # return the portfolio

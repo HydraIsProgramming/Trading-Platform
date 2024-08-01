@@ -64,22 +64,27 @@ class Stock_research:
         return stock.info['open']
     
     def get_daylow(stock_name: str):
+        """get the daily lowest price of the stock"""
         stock = yf.Ticker(stock_name)
         return stock.info['dayLow']
     
     def get_dayhigh(stock_name: str):
+        """get the daily highest price of the stock"""
         stock = yf.Ticker(stock_name)
         return stock.info['dayHigh']
     
     def get_mrkt_cap(stock_name: str):
+        """get the total market cap of the stock"""
         stock = yf.Ticker(stock_name)
         return stock.info['marketCap']
     
     def get_stock_name(stock_name: str):
+        """Get the name of the company of the selected stock"""
         stock = yf.Ticker(stock_name)
         return stock.info['longName']
     
     def get_change_px_percentage(stock_name: str):
+        """Calculate percent change in stock price of the day from open to close"""
         stock = yf.Ticker(stock_name)
         open_price = stock.info['open']
         current_price = stock.info['currentPrice']
@@ -92,5 +97,6 @@ class Stock_research:
         return 
     
     def get_beta(stock_name: str):
+        """Get beta (risk) of stock"""
         stock = yf.Ticker(stock_name)
         return stock.info['beta']
