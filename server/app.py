@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Initialize portfolio and research classes
-user_portfolio = portfolio.Portfolio    
+user_portfolio = portfolio.Portfolio() 
 stock_research = research.Stock_research
 
 @app.route('/research/summary', methods=['GET'])
