@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 import research
 import portfolio
@@ -9,6 +9,12 @@ CORS(app)
 # Initialize portfolio and research classes
 user_portfolio = portfolio.Portfolio() 
 stock_research = research.Stock_research
+
+@app.route("/")
+def all():
+    response = make_response("ANY")
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
 
 @app.route('/research/summary', methods=['GET'])
 def get_summary():
@@ -120,6 +126,7 @@ def get_portfolio_holding():
     cost_basis = user_portfolio.get_stock_cost_basis(stock_name)
     market_value = curr_price * position
     profit_loss = market_value - cost_basis
+
     return jsonify({
         'current_price': curr_price,
         'change_percentage': change_percentage,

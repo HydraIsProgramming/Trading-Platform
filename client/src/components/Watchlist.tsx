@@ -19,6 +19,7 @@ function Watchlist() {
           <tbody>
             <tr>
               { 1 < 0 ? 
+              // placeholder for something state related, cant remember what
                 <td className="border text-center bg-green-400 p-2">Yahoo</td>
                 : <td className="border text-center bg-red-400 p-2">Yahoo</td>
               }

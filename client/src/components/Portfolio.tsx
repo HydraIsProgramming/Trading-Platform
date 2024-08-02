@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { MdKeyboardBackspace } from "react-icons/md"
+import axios from "axios"
 
 function Portfolio() {
   // true is on, false is off meaning dividends will be on instead

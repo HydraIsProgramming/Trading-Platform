@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import NavBar from '../components/NavBar'
-import Switch from "react-switch"
-import { MdOutlineSearch } from "react-icons/md";
-
+import axios from "axios";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -15,9 +13,25 @@ function Trade() {
   const [searchPrice, setSearchPrice] = useState(48.00);
   const [searchPriceChange, setSearchPriceChange] = useState(0.34);
   const [searchPriceChangePercentage, setSearchPriceChangePercentage] = useState(0.70);
+  const [imageURL, setImageURL] = useState("")
+  // you can add an error message here if that works
 
   const handleActionClick = () => {
     setToggleSell(!toggleSell)
+  }
+
+  const submitedEvent = (event: any) => {
+      axios({
+        method: "get",
+        url: `http://127.0.0.1:5000/research/graph?stock_name=${searchQuery}&start_date=2022-01-01&end_date=2022-12-31`,
+      })
+        .then((res) => {
+          setImageURL(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        event.preventDefault();
   }
 
   const increaseQuantity = () => {
@@ -38,14 +52,6 @@ function Trade() {
     setSearchQuery(event.target.value)
   }
 
-  const rows = Array.from({ length: 20 }, (_, index) => (
-    <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
-      <td className="border border-gray-300 text-gray-900 px-4 py-2">2</td>
-      <td className="border border-gray-300 text-gray-900 px-4 py-2">Sell</td>
-      <td className="border border-gray-300 text-gray-900 px-4 py-2">2024-07-06</td>
-    </tr>
-  ));
-
   return (
     <div className="bg-gray-100">
       <div className="h-[135px]">
@@ -61,7 +67,7 @@ function Trade() {
               <label className="text-lg text-gray-900">Symbol</label>
               <input onChange={handleQuery} className="w-[150px] h-[30px] border border-gray-300 rounded px-2" />
               {
-              searchQuery == "IXIC" ? 
+              imageURL != "" ? 
               <div className="flex">
                 <h1 className="text-5xl ml-[10px]">{searchPrice}</h1>
                 <h4 className="text-lg self-end ml-[3px] text-green-500">{searchPriceChange} {(searchPriceChangePercentage).toFixed(2) + "%"}</h4>
@@ -127,23 +133,25 @@ function Trade() {
                   </td>
                 {/* fix later */}
                 <td className='px-5 py-2'>
-                  <button type="submit" className="self-end mt-auto bg-blue-500 w-[80px] h-[30px] rounded items-center">Submit</button>
+                  <button onClick={submitedEvent} className="self-end mt-auto bg-blue-500 w-[80px] h-[30px] rounded items-center">Submit</button>
                 </td>
               </tr>
             </table>
-
             </div>
           </div>
         </form>
-
-        {searchQuery == "IXIC" ? 
+            
+          {imageURL != ""? 
           <div className=" ml-[60px] flex h-[450px] w-[1050px]">
-            {/* will be fully name later */}
-            <h3 className="text-lg ml-[20px] mt-[10px] absolute">NASDAQ ENTERPRISES</h3><h2 className="mt-[32px] absolute ml-[20px]"> O<span className="text-sm text-red-600">48600</span> H<span className="text-sm text-red-600">48600</span> L<span className="text-sm text-red-600">48600</span> C<span className="text-sm text-red-600">48600</span></h2>
-            <img className="h-[450px] w-[1050px]" src="https://www.geogebra.org/resource/bYKdFABj/zWQ2Uf2SNlM5MHGI/material-bYKdFABj.png" />
+            {/* <h3 className="text-lg ml-[20px] mt-[10px] absolute">NASDAQ ENTERPRISES</h3><h2 className="mt-[32px] absolute ml-[20px]"> O<span className="text-sm text-red-600">48600</span> H<span className="text-sm text-red-600">48600</span> L<span className="text-sm text-red-600">48600</span> C<span className="text-sm text-red-600">48600</span></h2> */}
+            <img className="h-[450px] w-[1050px]" src={imageURL} />
           </div>
-        : ""}
-  
+          :
+          <div className=" ml-[60px] flex h-[450px] w-[1050px] hidden">
+            {/* <h3 className="text-lg ml-[20px] mt-[10px] absolute">NASDAQ ENTERPRISES</h3><h2 className="mt-[32px] absolute ml-[20px]"> O<span className="text-sm text-red-600">48600</span> H<span className="text-sm text-red-600">48600</span> L<span className="text-sm text-red-600">48600</span> C<span className="text-sm text-red-600">48600</span></h2> */}
+            <img className="h-[450px] w-[1050px]" src={imageURL} />
+          </div>
+          }
       </div>
     </div>
   )
